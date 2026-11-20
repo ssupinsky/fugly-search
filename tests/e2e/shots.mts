@@ -1,0 +1,25 @@
+import { launch, shot, makeSmallRepo, makeRepo } from './helpers.ts'
+const which = process.argv[2] ?? 'self'
+const ws = which === 'self' ? process.cwd() : which === '500k' ? makeRepo() : which
+const { app, page } = await launch({ workspace: ws })
+const input = page.getByRole('combobox')
+await page.waitForTimeout(150)
+await shot(page, `${which}-1-early`)
+await input.waitFor({ timeout: 60000 })
+await shot(page, `${which}-2-indexing-or-ready`)
+await page.waitForSelector('.pill.ready', { timeout: 120000 })
+await shot(page, `${which}-3-ready`)
+await input.fill('render search')
+await page.waitForTimeout(800)
+await shot(page, `${which}-4-results`)
+await page.getByLabel('Group by file').click(); await page.waitForTimeout(300)
+await shot(page, `${which}-5-grouped`)
+await input.fill('zzqqxxvv'); await page.waitForTimeout(800)
+await shot(page, `${which}-6-none`)
+await input.fill('render');
+await page.locator('.btn[aria-haspopup]').click(); await page.waitForTimeout(200)
+await shot(page, `${which}-7-picker`)
+await page.keyboard.press('Escape')
+await page.evaluate(() => (document.documentElement.dataset.theme = 'light')); await page.waitForTimeout(300)
+await shot(page, `${which}-8-light`)
+await app.close()

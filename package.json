@@ -1,0 +1,42 @@
+{
+  "name": "fugly-search",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fugly Search - fuzzy line search for repos",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "test:engine": "vitest run -c tests/engine/vitest.config.mts",
+    "bench:engine": "electron-vite build && rolldown src/main/search/engine.ts --format cjs --platform node -o tests/engine/.build/engine.cjs && node tests/engine/gen-corpus.cjs /tmp/fugly-corpus 1000000 && electron tests/engine/bench-main.cjs /tmp/fugly-corpus",
+    "test:e2e": "electron-vite build && node --test --test-concurrency=1 --test-timeout=240000 tests/e2e/app.test.mts",
+    "package": "electron-vite build && node scripts/package.mjs",
+    "test:package": "node --test --test-timeout=120000 tests/e2e/package.test.mts"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@parcel/watcher": "^2.6.0",
+    "@tanstack/react-virtual": "^3.14.26",
+    "highlight.js": "^11.12.0",
+    "ignore": "^7.0.14",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "shiki": "^4.6.0"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "electron": "^45.2.3",
+    "electron-vite": "^6.0.0",
+    "playwright": "^1.65.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}
