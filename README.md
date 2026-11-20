@@ -4,6 +4,8 @@ A fast fuzzy line-search desktop app (Electron + React + TypeScript) for source 
 
 ## Run
 
+Requires macOS and Node 22.12 or newer (developed and tested on Node 24; `nvm use` / `fnm use` picks it up from `.nvmrc`). Older Node versions install with warnings but the packager, vitest and the TypeScript tests are not expected to work.
+
 ```
 npm install
 npm run dev        # development
